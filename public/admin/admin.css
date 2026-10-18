@@ -1,0 +1,44 @@
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;font-family:system-ui,sans-serif;background:var(--color-cream);color:var(--color-green);line-height:1.5}
+.admin-nav{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;background:var(--color-green);padding:.7rem 1rem}
+.admin-nav a,.admin-nav button{color:var(--color-cream);text-decoration:none;background:none;border:0;font:inherit;cursor:pointer}
+.admin-nav a.on{color:var(--color-gold);font-weight:700}.admin-nav button{margin-left:auto}
+main{max-width:1100px;margin:1.2rem auto;padding:0 1rem}
+.card{background:var(--color-cream-card);border-radius:12px;padding:1.2rem;margin-bottom:1.2rem}
+.narrow{max-width:380px;margin:3rem auto}
+h1,h2{margin:.2rem 0 .8rem;font-family:Georgia,serif}
+.grid2{display:grid;gap:.8rem 1rem;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+label{display:flex;flex-direction:column;gap:.25rem;font-weight:600;font-size:.9rem}
+label.row{flex-direction:row;align-items:center;gap:.5rem}
+input,select,textarea{font:inherit;padding:.55rem .7rem;border:1.5px solid rgba(3,48,27,.3);border-radius:8px;background:#fff}
+fieldset{border:1.5px dashed var(--color-gold);border-radius:10px;margin:1rem 0;padding:.8rem}
+.btn{background:var(--color-green);color:var(--color-cream);border:0;border-radius:8px;padding:.65rem 1.1rem;font:inherit;font-weight:700;cursor:pointer}
+.btn.alt{background:var(--color-gold);color:var(--color-green)}.btn.sm{padding:.3rem .6rem;font-size:.85rem}
+.preview{font-weight:700;margin:.5rem 0}.msg{min-height:1.4em;font-weight:700}
+table{width:100%;border-collapse:collapse;font-size:.9rem}th,td{text-align:left;padding:.5rem;border-bottom:1px solid rgba(3,48,27,.15)}
+.wrap{overflow-x:auto}.badge{background:var(--color-gold);padding:.1rem .5rem;border-radius:999px;font-size:.75rem;font-weight:700}
+.off{opacity:.55}
+.tabs{display:flex;gap:.5rem;flex-wrap:wrap;margin:.5rem 0 1rem}
+.tab{font:inherit;font-size:.9rem;padding:.4rem .9rem;border-radius:999px;border:1.5px solid var(--color-green);background:transparent;color:var(--color-green);cursor:pointer}
+.tab.on{background:var(--color-green);color:var(--color-cream)}
+.badge.ok{background:#cfe8d3}.badge.warn{background:#f6e3b0}.badge.bad{background:#f3c7c3}
+tr.rowlink{cursor:pointer}tr.rowlink:hover{background:rgba(210,167,70,.15)}
+.detail h2{margin-top:0}.detail .two{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.detail dl{margin:0}.detail dt{font-weight:700;font-size:.8rem;text-transform:uppercase;opacity:.7;margin-top:.5rem}.detail dd{margin:0}
+.detail a{color:var(--color-green);font-weight:700}
+.actions-row{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;margin-top:1rem}
+.sumrow{display:flex;justify-content:space-between;max-width:320px}.sumrow.t{font-weight:800;border-top:2px solid var(--color-gold);margin-top:.3rem;padding-top:.3rem}
+.search{width:100%;max-width:340px}
+.thumb{width:48px;height:48px;border-radius:8px;object-fit:cover;background:var(--color-sage);display:grid;place-items:center;color:var(--color-cream);font-family:Georgia,serif}
+.inline{display:flex;gap:.4rem;flex-wrap:wrap}
+.kpis{display:grid;gap:.8rem;grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.kpi{display:flex;flex-direction:column;background:var(--color-cream);border-left:5px solid var(--color-gold);border-radius:10px;padding:.8rem 1rem;text-decoration:none;color:inherit}
+a.kpi:hover{outline:2px solid var(--color-gold)}
+.kpi-l{font-size:.8rem;text-transform:uppercase;letter-spacing:.04em;opacity:.7}.kpi-v{font-size:1.6rem;font-family:Georgia,serif}.kpi-s{font-size:.8rem;opacity:.7}
+.chart{display:flex;align-items:flex-end;gap:3px;height:220px;padding-bottom:1.4rem;border-bottom:2px solid var(--color-green)}
+.bar-col{flex:1;height:100%;display:flex;align-items:flex-end;justify-content:center;position:relative;min-width:2px}
+.bar{width:100%;max-width:38px;background:var(--color-green);border-radius:4px 4px 0 0}.bar:hover{background:var(--color-gold)}
+.bar-lbl{position:absolute;bottom:-1.3rem;font-size:.65rem;white-space:nowrap}
+.two-col{display:grid;gap:1.2rem}@media(min-width:860px){.two-col{grid-template-columns:1fr 1fr}}
+.meter{margin:.6rem 0}.meter-h{display:flex;justify-content:space-between;gap:1rem;font-size:.9rem}
+.meter-t{height:10px;background:rgba(3,48,27,.12);border-radius:999px;overflow:hidden;margin-top:.2rem}.meter-f{height:100%;background:var(--color-green)}

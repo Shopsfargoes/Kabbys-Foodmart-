@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dashboard | Admin</title>
+<link rel="stylesheet" href="../css/variables.css"><link rel="stylesheet" href="admin.css"><link rel="icon" href="/favicon.svg" type="image/svg+xml">
+</head>
+<body><main>
+<section class="card">
+  <div class="actions-row" style="margin:0">
+    <h2 style="margin:0">Dashboard</h2>
+    <select id="range" aria-label="Time range">
+      <option value="7">Last 7 days</option><option value="30" selected>Last 30 days</option>
+      <option value="90">Last 90 days</option><option value="365">Last 12 months</option></select>
+  </div>
+  <p class="msg" id="err" role="alert"></p>
+  <div class="kpis" id="attention"></div>
+</section>
+<section class="card"><div class="kpis" id="kpis"></div></section>
+<section class="card">
+  <div class="actions-row" style="margin:0 0 .8rem"><h2 style="margin:0">Revenue</h2>
+    <select id="group" aria-label="Group revenue by">
+      <option value="day">By day</option><option value="week">By week</option><option value="month">By month</option></select></div>
+  <div class="chart" id="chart" role="img" aria-label="Revenue chart"></div>
+</section>
+<div class="two-col">
+  <section class="card"><h2>Top products</h2><div id="top"></div></section>
+  <section class="card"><h2>How customers get orders</h2><div id="split"></div>
+    <h2 style="margin-top:1.2rem">New vs returning customers</h2><div id="cust"></div></section>
+</div>
+</main>
+<script type="module" src="../js/admin/dashboard.js"></script></body></html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Delivery | Admin</title>
+<link rel="stylesheet" href="../css/variables.css"><link rel="stylesheet" href="admin.css"><link rel="icon" href="/favicon.svg" type="image/svg+xml">
+</head>
+<body><main>
+
+<section class="card"><h2>Local delivery zones</h2>
+  <p class="hint">Flat fee for deliveries inside a city. Customers pick their zone at checkout.</p>
+  <form id="zf" novalidate><div class="grid2">
+    <label>City<input id="zcity" maxlength="60" placeholder="Akure" required></label>
+    <label>Zone name<input id="zname" maxlength="60" placeholder="Zone A (nearby)" required></label>
+    <label>Fee (₦)<input id="zfee" type="number" min="0" step="1" required></label></div>
+    <p><button class="btn" type="submit">Save zone</button> <button class="btn alt" type="button" id="zcancel">Clear</button></p>
+    <p class="msg" id="zmsg" role="status"></p></form>
+  <div class="wrap"><table><thead><tr><th>City</th><th>Zone</th><th>Fee</th><th></th></tr></thead><tbody id="zrows"></tbody></table></div>
+</section>
+
+<section class="card"><h2>Other-city delivery</h2>
+  <p class="hint">Fee = base fee + rate per kg. Only products marked "can ship to other cities" are allowed.</p>
+  <form id="rf" novalidate><div class="grid2">
+    <label>City<input id="rcity" maxlength="60" required></label>
+    <label>Base fee (₦)<input id="rbase" type="number" min="0" step="1" required></label>
+    <label>Extra per kg (₦)<input id="rkg" type="number" min="0" step="1" value="0"></label>
+    <label>Delivery days (min)<input id="rmin" type="number" min="1" step="1" value="2"></label>
+    <label>Delivery days (max)<input id="rmax" type="number" min="1" step="1" value="4"></label></div>
+    <p><button class="btn" type="submit">Save city</button> <button class="btn alt" type="button" id="rcancel">Clear</button></p>
+    <p class="msg" id="rmsg" role="status"></p></form>
+  <div class="wrap"><table><thead><tr><th>City</th><th>Base</th><th>Per kg</th><th>Days</th><th></th></tr></thead><tbody id="rrows"></tbody></table></div>
+</section>
+
+<section class="card"><h2>Riders</h2>
+  <p class="hint">Riders get order details on WhatsApp from the Orders page. They do not need an app or login.</p>
+  <form id="df" novalidate><div class="grid2">
+    <label>Name<input id="dname" maxlength="60" required></label>
+    <label>Phone (WhatsApp)<input id="dphone" type="tel" placeholder="0803 000 0000" required></label></div>
+    <p><button class="btn" type="submit">Save rider</button> <button class="btn alt" type="button" id="dcancel">Clear</button></p>
+    <p class="msg" id="dmsg" role="status"></p></form>
+  <div class="wrap"><table><thead><tr><th>Name</th><th>Phone</th><th></th></tr></thead><tbody id="drows"></tbody></table></div>
+</section>
+
+<section class="card"><h2>Pickup &amp; free delivery</h2>
+  <form id="sf" novalidate><div class="grid2">
+    <label>Pickup address<input id="spickup" maxlength="200"></label>
+    <label>Pickup hours<input id="shours" maxlength="100" placeholder="Mon-Sat, 8am-6pm"></label>
+    <label>Store phone<input id="sphone" maxlength="20"></label>
+    <label>Free local delivery above (₦, 0 = off)<input id="sfree" type="number" min="0" step="1" value="0"></label></div>
+    <p><button class="btn" type="submit">Save</button></p><p class="msg" id="smsg" role="status"></p></form>
+</section>
+</main>
+<script type="module" src="../js/admin/delivery.js"></script></body></html>

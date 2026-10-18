@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Categories | Admin</title>
+<link rel="stylesheet" href="../css/variables.css"><link rel="stylesheet" href="admin.css"><link rel="icon" href="/favicon.svg" type="image/svg+xml">
+</head>
+<body><main>
+<section class="card">
+  <h2 id="formTitle">Add category</h2>
+  <form id="cf" novalidate>
+    <div class="grid2">
+      <label>Category name<input id="name" maxlength="40" required placeholder="e.g. Grains &amp; Cereals"></label>
+      <label>Image (jpg, png, webp, max 2MB)<input id="image" type="file" accept="image/jpeg,image/png,image/webp"></label>
+    </div>
+    <p><button class="btn" type="submit">Save category</button>
+       <button class="btn alt" type="button" id="cancel">Clear</button></p>
+    <p class="msg" id="msg" role="status"></p>
+  </form>
+</section>
+<section class="card">
+  <h2>Categories</h2>
+  <p class="hint">Use the arrows to change the order shown on the shop. Hidden categories disappear from the website but keep their products.</p>
+  <div class="wrap"><table>
+    <thead><tr><th>Image</th><th>Name</th><th>Products</th><th>Order</th><th>Visibility</th><th></th></tr></thead>
+    <tbody id="rows"></tbody></table></div>
+</section>
+</main>
+<script type="module" src="../js/admin/categories.js"></script></body></html>

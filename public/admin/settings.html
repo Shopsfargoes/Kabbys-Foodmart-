@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Settings | Admin</title>
+  <link rel="stylesheet" href="admin.css">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+  <main class="admin-card">
+    <h1>Site Settings</h1>
+
+    <form id="settingsForm" novalidate>
+      <label>
+        <input type="checkbox" id="waEnabled"> Show WhatsApp chat bubble
+      </label>
+
+      <label for="waNumber">WhatsApp number (international, digits only)</label>
+      <input id="waNumber" inputmode="numeric" placeholder="2348012345678"
+             maxlength="15" autocomplete="off">
+      <small>Country code first, no +, spaces or leading 0.</small>
+
+      <label for="waGreeting">Default greeting message</label>
+      <textarea id="waGreeting" rows="3" maxlength="200"></textarea>
+
+      <button type="submit">Save settings</button>
+      <p id="status" role="status"></p>
+    </form>
+  </main>
+
+  <script type="module" src="../js/admin/settings.js"></script>
+</body>
+</html>

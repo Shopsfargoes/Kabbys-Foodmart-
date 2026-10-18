@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Products | Admin</title>
+<link rel="stylesheet" href="../css/variables.css"><link rel="stylesheet" href="admin.css"><link rel="icon" href="/favicon.svg" type="image/svg+xml">
+</head>
+<body><main>
+<section class="card">
+  <h2 id="formTitle">Add product</h2>
+  <form id="pf" novalidate>
+    <div class="grid2">
+      <label>Name<input id="name" maxlength="100" required></label>
+      <label>URL slug (auto)<input id="slug" maxlength="80" placeholder="auto-from-name"></label>
+      <label>Category<select id="cat"><option value="">No category</option></select></label>
+      <label>Image (jpg, png, webp, max 2MB)<input id="image" type="file" accept="image/jpeg,image/png,image/webp"></label>
+    </div>
+    <label>Description<textarea id="desc" rows="2" maxlength="1000"></textarea></label>
+    <fieldset><legend>Price &amp; discount</legend>
+      <div class="grid2">
+        <label>Price per kg (₦)<input id="price" type="number" min="0" step="0.01" required></label>
+        <label>Discount type<select id="dtype">
+          <option value="none">No discount</option>
+          <option value="percent">Percentage (%) off</option>
+          <option value="flat">Flat (₦ off per kg)</option></select></label>
+        <label>Discount value<input id="dval" type="number" min="0" step="0.01" value="0"></label>
+        <label>Starts (optional)<input id="dstart" type="datetime-local"></label>
+        <label>Ends (optional)<input id="dend" type="datetime-local"></label>
+      </div>
+      <p class="preview" id="preview"></p>
+    </fieldset>
+    <div class="grid2">
+      <label>Stock (kg)<input id="stock" type="number" min="0" step="0.001" value="0"></label>
+      <label>Minimum order (kg)<input id="min" type="number" min="0.001" step="0.001" value="0.5"></label>
+      <label>Step (kg)<input id="step" type="number" min="0.001" step="0.001" value="0.5"></label>
+      <label>Low-stock alert (kg)<input id="low" type="number" min="0" step="0.001" value="5"></label>
+    </div>
+    <label class="row"><input id="inter" type="checkbox"> Can ship to other cities</label>
+    <label class="row"><input id="active" type="checkbox" checked> Visible in shop</label>
+    <p><button class="btn" type="submit">Save product</button>
+       <button class="btn alt" type="button" id="reset">Clear</button></p>
+    <p class="msg" id="msg" role="status"></p>
+  </form>
+</section>
+<section class="card"><h2>All products</h2><div class="wrap"><table>
+  <thead><tr><th>Name</th><th>Category</th><th>Price/kg</th><th>Discount</th><th>Stock</th><th></th></tr></thead>
+  <tbody id="rows"></tbody></table></div></section>
+</main>
+<script type="module" src="../js/admin/products.js"></script></body></html>

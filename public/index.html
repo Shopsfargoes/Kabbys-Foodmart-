@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kabby’s Foodmart | Quality you will taste, prices you will love</title>
+  <meta name="description" content="Quality foodstuff sold by the kg in Akure, Ondo State. Order online for pickup or delivery.">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/home.css">
+  <link rel="stylesheet" href="css/whatsapp.css">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html">Kabby’s<span>Foodmart</span></a>
+    <nav class="nav" aria-label="Main">
+      <a class="active" href="index.html">Home</a>
+      <a href="shop.html">Shop</a>
+      <a href="#categories">Categories</a>
+      <a href="custom-order.html">Custom Order</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a class="cart-link" href="cart.html">Cart (<span id="cartCount">0</span>)</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="container">
+      <div>
+        <span class="pill">NUTRITIOUS | CLEAN | QUALITY</span>
+        <h1>Quality you will taste, prices you will love.</h1>
+        <p>Fresh foodstuff sold by the kg. Order online for pickup or delivery in Akure and to other cities.</p>
+        <div class="hero-cta">
+          <a class="btn btn-gold" href="shop.html">Shop now →</a>
+          <a class="btn btn-outline" href="custom-order.html">Custom order</a>
+        </div>
+        <ul class="hero-badges">
+          <li>Sold by the kg</li><li>Pickup &amp; delivery</li><li>Secure Paystack payment</li>
+        </ul>
+      </div>
+      <div class="hero-visual" role="img" aria-label="Kabby’s Foodmart foodstuff"></div>
+    </div>
+  </section>
+
+  <section class="section" id="shop">
+    <div class="container">
+      <div class="section-head">
+        <h2>Shop Our Foodstuff</h2>
+        <p>Fresh picks, priced per kg. Order now or ask us anything on WhatsApp.</p>
+      </div>
+      <div class="grid" id="productGrid"><p class="note">Loading products…</p></div>
+      <p class="center"><a class="btn btn-green" href="shop.html">Browse all products →</a></p>
+    </div>
+  </section>
+
+  <section class="section alt" id="categories">
+    <div class="container">
+      <div class="section-head">
+        <h2>Shop by Category</h2>
+        <p>Find exactly what you need, quickly.</p>
+      </div>
+      <div class="grid cats" id="categoryGrid"><p class="note">Loading categories…</p></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container promos">
+      <div class="promo">
+        <h3>Pickup or delivery</h3>
+        <p id="promoFree">Pickup is free. Delivery fees are shown at checkout.</p>
+        <a class="btn btn-gold" href="shop.html">Start shopping</a>
+      </div>
+      <div class="promo">
+        <h3>Need a bulk or special order?</h3>
+        <p>Events, restaurants or wholesale. Tell us what you need and we will send a quote.</p>
+        <a class="btn btn-gold" href="custom-order.html">Request a quote</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container">
+      <div class="section-head"><h2>Why Choose Kabby’s</h2></div>
+      <div class="grid features">
+        <div><span aria-hidden="true">🌾</span><h3>Quality you can taste</h3><p>Clean, carefully selected foodstuff.</p></div>
+        <div><span aria-hidden="true">🧼</span><h3>Clean &amp; safe</h3><p>Hygienic handling from store to door.</p></div>
+        <div><span aria-hidden="true">💬</span><h3>Friendly support</h3><p>Questions? We are one WhatsApp message away.</p></div>
+        <div><span aria-hidden="true">🚚</span><h3>Pickup &amp; delivery</h3><p>Within the city and to other cities.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="faq">
+    <div class="container faq">
+      <div class="section-head"><h2>Frequently Asked Questions</h2></div>
+      <details><summary>How do I place an order?</summary><p>Add items by kg, check out, and pay securely with Paystack. We confirm your order by email and phone.</p></details>
+      <details><summary>Pickup or delivery?</summary><p>Both. Pickup is free. For delivery, choose your area at checkout and the fee is added automatically.</p></details>
+      <details><summary>Do you deliver to other cities?</summary><p>Yes, for selected items and cities. The fee depends on the city and the weight of your order.</p></details>
+      <details><summary>Can I place a custom or bulk order?</summary><p>Yes. Send a request on the custom order page and we will reply with a quote.</p></details>
+      <details><summary>How can I pay?</summary><p>Payments are handled securely by Paystack. We never see your card details.</p></details>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container foot">
+    <div>
+      <a class="brand" href="index.html">Kabby’s<span>Foodmart</span></a>
+      <p>Quality you will taste, prices you will love.</p>
+    </div>
+    <div>
+      <h4>Quick links</h4>
+      <a href="shop.html">Shop</a><a href="custom-order.html">Custom order</a>
+      <a href="account.html">My account</a><a href="privacy.html">Privacy policy</a>
+    </div>
+    <div>
+      <h4>Get in touch</h4>
+      <a id="footPhone" href="tel:+2348127580727">+234 812 758 0727</a>
+      <span>Beside 19:30 Hotel, Sijuade, Akure, Ondo State</span>
+      <span id="footHours"></span>
+    </div>
+  </div>
+  <p class="copy">© 2026 Kabby’s Foodmart. All rights reserved.</p>
+</footer>
+
+<script type="module" src="js/home.js"></script>
+<script type="module" src="js/whatsapp.js"></script>
+</body>
+</html>

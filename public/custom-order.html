@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Custom &amp; Bulk Orders | Kabby’s Foodmart</title>
+  <meta name="description" content="Need a bulk or special order? Tell us what you need and we will send you a quote.">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/home.css">
+  <link rel="stylesheet" href="css/pages.css">
+  <link rel="stylesheet" href="css/whatsapp.css">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+</head>
+<body data-page="custom">
+<main class="section">
+  <div class="container narrow-page">
+    <h1 class="page-title">Custom &amp; bulk orders</h1>
+    <p class="lead">Planning an event, stocking a restaurant, or buying in bulk? Tell us what you need and we will reply with a quote.</p>
+    <form id="cf" class="card" novalidate>
+      <div class="form-grid">
+        <label class="field">Full name<input id="name" autocomplete="name" maxlength="100" required></label>
+        <label class="field">Phone number<input id="phone" type="tel" autocomplete="tel" placeholder="0803 000 0000" required></label>
+        <label class="field wide">Email<input id="email" type="email" autocomplete="email" maxlength="254" required></label>
+        <label class="field wide">What do you need?<textarea id="details" rows="5" maxlength="2000" placeholder="Items, occasion, delivery or pickup, anything we should know" required></textarea></label>
+        <label class="field">Quantities (optional)<input id="qty" maxlength="200" placeholder="e.g. 50kg rice, 20kg beans"></label>
+        <label class="field">Date needed (optional)<input id="date" type="date"></label>
+      </div>
+      <input id="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <p class="hint">We use your details only to reply to this request. See our <a href="privacy.html">privacy policy</a>.</p>
+      <p id="err" class="err" role="alert"></p>
+      <button class="btn btn-gold" id="send" type="submit">Send request</button>
+    </form>
+    <div id="done" class="card center-card" hidden>
+      <h2>Request received</h2>
+      <p>Thank you! We will contact you shortly with a quote.</p>
+      <p><a class="btn btn-green" href="shop.html">Continue shopping</a></p>
+    </div>
+  </div>
+</main>
+<script type="module" src="js/layout.js"></script>
+<script type="module" src="js/customOrder.js"></script>
+<script type="module" src="js/whatsapp.js"></script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Log in | Kabby’s Foodmart</title>
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/home.css">
+  <link rel="stylesheet" href="css/pages.css">
+  <link rel="stylesheet" href="css/whatsapp.css">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+</head>
+<body data-page="account">
+<main class="section">
+  <div class="container narrow-page">
+    <div class="card" style="padding:1.5rem">
+      <h1 class="page-title">Log in</h1>
+      <p class="lead">No password needed. Enter your email and we will send you a secure link to view your orders.</p>
+      <form id="lf" novalidate>
+        <label class="field">Email<input id="email" type="email" autocomplete="email" maxlength="254" required></label>
+        <p id="msg" class="err" role="status"></p>
+        <button class="btn btn-green" id="go" type="submit">Email me a login link</button>
+      </form>
+      <p class="hint">New here? Your account is created automatically when you place your first order.</p>
+    </div>
+  </div>
+</main>
+<script type="module" src="js/layout.js"></script>
+<script type="module" src="js/loginPage.js"></script>
+<script type="module" src="js/whatsapp.js"></script>
+</body>
+</html>

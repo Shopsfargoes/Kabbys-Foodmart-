@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Checkout | Kabby’s Foodmart</title>
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/home.css">
+  <link rel="stylesheet" href="css/pages.css">
+  <link rel="stylesheet" href="css/whatsapp.css">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+</head>
+<body data-page="cart">
+<main class="section">
+  <div class="container">
+    <h1 class="page-title">Checkout</h1>
+    <div class="co">
+      <form id="cf" class="card" novalidate>
+        <h2>Your details</h2>
+        <div class="form-grid">
+          <label class="field">Full name<input id="name" autocomplete="name" maxlength="100" required></label>
+          <label class="field">Phone number<input id="phone" type="tel" autocomplete="tel" placeholder="0803 000 0000" required></label>
+          <label class="field wide">Email<input id="email" type="email" autocomplete="email" maxlength="254" required></label>
+        </div>
+        <h2>How would you like to get your order?</h2>
+        <div class="radio-row">
+          <label><input type="radio" name="dt" value="pickup" checked> Pickup (free)</label>
+          <label><input type="radio" name="dt" value="delivery"> Delivery</label>
+        </div>
+        <p id="pickupInfo" class="hint"></p>
+        <div id="deliveryBox" hidden>
+          <div class="form-grid">
+            <label class="field wide">Delivery area<select id="area"><option value="">Choose your area or city…</option></select></label>
+            <label class="field wide">Delivery address<textarea id="address" rows="2" maxlength="300"></textarea></label>
+          </div>
+        </div>
+        <label class="field">Order note (optional)<textarea id="note" rows="2" maxlength="500"></textarea></label>
+        <input id="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <p class="hint">We will create an account for you so you can track this order. See our <a href="privacy.html">privacy policy</a>.</p>
+      </form>
+
+      <aside class="card summary">
+        <h2>Order summary</h2>
+        <div id="sumItems"></div>
+        <div class="coupon">
+          <input id="coupon" placeholder="Coupon code" maxlength="30" autocomplete="off" aria-label="Coupon code">
+          <button class="btn btn-outline btn-sm" id="applyCoupon" type="button">Apply</button>
+        </div>
+        <p id="couponMsg" class="hint" role="status"></p>
+        <p class="sum-line"><span>Subtotal</span><strong id="sumSub">₦0</strong></p>
+        <p class="sum-line" id="discRow" hidden><span>Coupon discount</span><strong id="sumDisc"></strong></p>
+        <p class="sum-line"><span>Delivery</span><strong id="sumFee">₦0</strong></p>
+        <p class="sum-line total"><span>Total</span><strong id="sumTotal">₦0</strong></p>
+        <p id="err" class="err" role="alert"></p>
+        <button class="btn btn-gold" id="payBtn" type="button">Pay securely with Paystack</button>
+      </aside>
+    </div>
+  </div>
+</main>
+<script src="https://js.paystack.co/v1/inline.js"></script>
+<script type="module" src="js/layout.js"></script>
+<script type="module" src="js/checkout.js"></script>
+<script type="module" src="js/whatsapp.js"></script>
+</body>
+</html>

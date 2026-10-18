@@ -1,0 +1,33 @@
+/* Kabby's Foodmart brand tokens - sampled from the banner */
+:root{
+  /* Brand */
+  --color-green:        #03301b;  /* deep green: headers, footer, primary buttons */
+  --color-gold:         #d2a746;  /* gold: accents, highlights, secondary buttons */
+  --color-cream:        #faf6f0;  /* page background */
+  --color-cream-card:   #f4eee5;  /* cards, inputs, panels */
+  --color-sage:         #5c6f52;  /* muted green: badges, tags, hover states */
+
+  /* Roles */
+  --color-bg:           var(--color-cream);
+  --color-surface:      var(--color-cream-card);
+  --color-text:         var(--color-green);
+  --color-text-on-dark: var(--color-cream);
+  --color-primary:      var(--color-green);
+  --color-on-primary:   var(--color-cream);
+  --color-accent:       var(--color-gold);
+  --color-on-accent:    var(--color-green);
+  --color-muted:        var(--color-sage);
+
+  /* Status (functional, not from the banner) */
+  --color-success: #2e7d32;
+  --color-error:   #b3261e;
+
+  --radius: 12px;
+  --radius-pill: 999px;
+  --shadow: 0 4px 14px rgba(3, 48, 27, .12);
+}
+
+/* Contrast notes:
+   - Cream or gold text on deep green passes easily (about 6:1 or better for gold).
+   - Gold text on cream is only about 2:1: use gold for borders, icons, large accents
+     and button backgrounds (with green text), never for small body text. */

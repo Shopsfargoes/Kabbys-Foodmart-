@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shop | Kabby’s Foodmart</title>
+  <meta name="description" content="Browse foodstuff sold by the kg. Filter by category and order for pickup or delivery.">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/home.css">
+  <link rel="stylesheet" href="css/pages.css">
+  <link rel="stylesheet" href="css/whatsapp.css">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+</head>
+<body data-page="shop">
+<main class="section">
+  <div class="container">
+    <h1 class="page-title">Shop</h1>
+    <div class="toolbar">
+      <input id="q" type="search" placeholder="Search products…" aria-label="Search products" maxlength="60">
+      <select id="sort" aria-label="Sort products">
+        <option value="new">Newest</option>
+        <option value="low">Price: low to high</option>
+        <option value="high">Price: high to low</option>
+        <option value="name">Name A–Z</option>
+      </select>
+      <label class="check"><input type="checkbox" id="stock"> In stock only</label>
+    </div>
+    <div class="chips" id="chips" role="group" aria-label="Categories"></div>
+    <p class="count" id="count" aria-live="polite"></p>
+    <div class="grid" id="grid"><p class="note">Loading products…</p></div>
+  </div>
+</main>
+<script type="module" src="js/layout.js"></script>
+<script type="module" src="js/shop.js"></script>
+<script type="module" src="js/whatsapp.js"></script>
+</body>
+</html>

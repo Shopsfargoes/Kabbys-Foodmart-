@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Custom Orders | Admin</title>
+<link rel="stylesheet" href="../css/variables.css"><link rel="stylesheet" href="admin.css"><link rel="icon" href="/favicon.svg" type="image/svg+xml">
+</head>
+<body><main>
+<section class="card detail" id="detail" hidden></section>
+<section class="card">
+  <h2>Custom &amp; bulk order requests</h2>
+  <div class="tabs" id="tabs" role="group" aria-label="Request filters"></div>
+  <input class="search" id="q" type="search" placeholder="Search name, phone or email" aria-label="Search requests" maxlength="60">
+  <div class="wrap"><table>
+    <thead><tr><th>From</th><th>Request</th><th>Needed by</th><th>Quote</th><th>Status</th><th>Received</th></tr></thead>
+    <tbody id="rows"></tbody></table></div>
+  <p class="msg" id="empty"></p>
+</section>
+</main>
+<script type="module" src="../js/admin/custom-orders.js"></script></body></html>
