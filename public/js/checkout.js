@@ -2,7 +2,7 @@ import { supabase } from './supabaseClient.js';
 import { getCart, clearCart } from './cart.js';
 import { $, el, naira, effectivePrice } from './ui.js';
 
-const PAYSTACK_PUBLIC_KEY = 'pk_test_xxxxxxxx'; // TODO: your Paystack PUBLIC key (never the secret key)
+const PAYSTACK_PUBLIC_KEY = 'pk_test_10d6da44fc0a9bcfb7eeaf110238aec4bf329b43'; // TODO: your Paystack PUBLIC key (never the secret key)
 const NG_PHONE = /^(?:\+?234|0)[789][01]\d{8}$/;
 const r2 = (n) => Math.round(n * 100) / 100;
 const r3 = (n) => Math.round(n * 1000) / 1000;
