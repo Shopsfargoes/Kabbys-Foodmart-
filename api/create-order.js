@@ -3,6 +3,7 @@
 // The browser only sends: items (id + kg), contact details, delivery choice.
 import { randomBytes } from 'node:crypto';
 import { z } from 'zod';
+import { isAllowedOrigin } from './_lib/origin.js';
 import { supabaseAdmin } from './_lib/supabaseAdmin.js';
 import { unitPrice, evaluateCoupon } from './_lib/pricing.js';
 import { rateLimit } from './_lib/rateLimit.js'; // assumed: rateLimit(req, {key, limit, windowMs}) -> {ok}
@@ -42,7 +43,7 @@ export default async function handler(req, res) {
 
   // Same-origin only
   const origin = req.headers.origin;
-  if (origin && origin !== process.env.SITE_URL) return fail(res, 403, 'Forbidden');
+  if (origin && !isAllowedOrigin(origin)) return fail(res, 403, 'Forbidden');
 
   const ip = (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || 'unknown';
   const rl = await rateLimit(req, { key: `order:${ip}`, limit: 10, windowMs: 10 * 60 * 1000 });

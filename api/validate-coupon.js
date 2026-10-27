@@ -1,6 +1,7 @@
 // POST { code, email?, items:[{product_id, qty_kg}] } -> { code, discount }
 // Lets checkout preview a coupon. create-order.js re-validates everything before charging.
 import { z } from 'zod';
+import { isAllowedOrigin } from './_lib/origin.js';
 import { supabaseAdmin } from './_lib/supabaseAdmin.js';
 import { rateLimit } from './_lib/rateLimit.js';
 import { unitPrice, evaluateCoupon, round2 } from './_lib/pricing.js';
@@ -14,7 +15,7 @@ const Body = z.object({
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
   const origin = req.headers.origin;
-  if (origin && origin !== process.env.SITE_URL) return res.status(403).json({ error: 'Forbidden' });
+  if (origin && !isAllowedOrigin(origin)) return res.status(403).json({ error: 'Forbidden' });
 
   const ip = (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || 'unknown';
   const rl = await rateLimit(req, { key: `coupon:${ip}`, limit: 20, windowMs: 10 * 60 * 1000 });

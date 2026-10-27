@@ -1,5 +1,6 @@
 // POST { email } -> always { ok: true }. Never reveals whether an account exists.
 import { z } from 'zod';
+import { isAllowedOrigin } from './_lib/origin.js';
 import { supabaseAdmin as db } from './_lib/supabaseAdmin.js';
 import { rateLimit } from './_lib/rateLimit.js';
 import { sendAccessLink } from './_lib/ensureCustomer.js';
@@ -9,7 +10,7 @@ const Body = z.object({ email: z.string().trim().toLowerCase().email().max(254) 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
   const origin = req.headers.origin;
-  if (origin && origin !== process.env.SITE_URL) return res.status(403).json({ error: 'Forbidden' });
+  if (origin && !isAllowedOrigin(origin)) return res.status(403).json({ error: 'Forbidden' });
 
   const parsed = Body.safeParse(req.body);
   if (!parsed.success) return res.status(400).json({ error: 'Please enter a valid email address.' });

@@ -1,6 +1,7 @@
 // POST custom/bulk order request. Customers cannot write to the database directly,
 // so this validates everything and inserts with the service role.
 import { z } from 'zod';
+import { isAllowedOrigin } from './_lib/origin.js';
 import { supabaseAdmin as db } from './_lib/supabaseAdmin.js';
 import { rateLimit } from './_lib/rateLimit.js';
 import { notifyCustomOrder } from './_lib/notify.js';
@@ -19,7 +20,7 @@ const Body = z.object({
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
   const origin = req.headers.origin;
-  if (origin && origin !== process.env.SITE_URL) return res.status(403).json({ error: 'Forbidden' });
+  if (origin && !isAllowedOrigin(origin)) return res.status(403).json({ error: 'Forbidden' });
 
   const ip = (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || 'unknown';
   const rl = await rateLimit(req, { key: `custom:${ip}`, limit: 5, windowMs: 60 * 60 * 1000 });
