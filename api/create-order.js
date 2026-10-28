@@ -1,6 +1,6 @@
 // api/create-order.js
 // Creates a PENDING order. Prices, delivery fee and total are ALWAYS recomputed here.
-// The browser only sends: items (id + kg), contact details, delivery choice.
+// The browser only sends: items (id + quantity), contact details, delivery choice.
 import { randomBytes } from 'node:crypto';
 import { z } from 'zod';
 import { isAllowedOrigin } from './_lib/origin.js';
@@ -67,7 +67,7 @@ export default async function handler(req, res) {
 
     const { data: products, error: pErr } = await supabaseAdmin
       .from('products')
-      .select('id, name, price_per_kg, discount_type, discount_value, discount_starts_at, discount_ends_at, stock_kg, min_order_kg, step_kg, ships_intercity, is_active')
+      .select('id, name, sold_by, weight_kg, price_per_kg, discount_type, discount_value, discount_starts_at, discount_ends_at, stock_kg, min_order_kg, step_kg, ships_intercity, is_active')
       .in('id', ids);
     if (pErr) throw pErr;
 
@@ -89,19 +89,20 @@ export default async function handler(req, res) {
         return fail(res, 400, `Invalid quantity for ${p.name}.`);
       }
       if (qty > stock) {
-        return fail(res, 400, `Only ${stock}kg of ${p.name} left in stock.`);
+        return fail(res, 400, `Only ${stock}${p.sold_by === 'unit' ? '' : 'kg'} of ${p.name} left in stock.`);
       }
 
       const unit = unitPrice(p); // after product discount
       const lineTotal = round2(qty * unit);
       subtotal = round2(subtotal + lineTotal);
-      totalKg = round3(totalKg + qty);
+      totalKg = round3(totalKg + (p.sold_by === 'unit' ? qty * Number(p.weight_kg || 0) : qty));
       lines.push({
         product_id: p.id,
         product_name: p.name,
         price_per_kg: unit,
         list_price_per_kg: p.price_per_kg,
         qty_kg: qty,
+        sold_by: p.sold_by,
         line_total: lineTotal,
         ships_intercity: p.ships_intercity,
       });
@@ -211,12 +212,3 @@ export default async function handler(req, res) {
     return fail(res, 500, 'Could not create your order. Please try again.');
   }
 }
-
-/* Reminder for verify-payment.js and paystack-webhook.js:
-   - Look the order up by reference, compare Paystack's amount (kobo) to
-     Math.round(order.total * 100), and its currency to NGN. Reject mismatches.
-   - Insert event id into paystack_events first; a duplicate means already processed.
-   - Then call supabaseAdmin.rpc('redeem_coupon_for_order', { p_order_id }) (idempotent).
-   - Then set payment_status='paid', paid_at, call ensureCustomer(), and
-     supabaseAdmin.rpc('deduct_stock_for_order', { p_order_id }).
-*/

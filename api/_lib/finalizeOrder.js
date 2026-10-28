@@ -46,7 +46,7 @@ export async function finalizeOrder({ reference, tx }) {
   }
 
   if (first) {
-    const { data: items } = await db.from('order_items').select('product_name, qty_kg, line_total').eq('order_id', order.id);
+    const { data: items } = await db.from('order_items').select('product_name, qty_kg, line_total, sold_by').eq('order_id', order.id);
     await notifyOwner(order, items || []);
   }
   return { status: 'paid' };

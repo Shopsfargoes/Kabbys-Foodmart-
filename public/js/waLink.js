@@ -1,6 +1,5 @@
-// public/js/waLink.js
 // Builds a WhatsApp "ask for more info" link for a product.
-// Uses the same site_settings as the floating bubble, so one number to manage.
+// Uses the same site_settings as the floating bubble, so there is one number to manage.
 import { supabase } from './supabaseClient.js';
 
 let cached; // fetched once per page load
@@ -20,8 +19,8 @@ async function getSettings() {
   return cached;
 }
 
-// product: { name, price_per_kg }
-// Returns a URL string, or null if WhatsApp is disabled/misconfigured.
+// product: { name, price_per_kg, sold_by }
+// Returns a URL string, or null if WhatsApp is disabled or misconfigured.
 export async function productInfoLink(product) {
   const s = await getSettings();
   if (!s || s.whatsapp_enabled !== 'true') return null;
@@ -29,42 +28,10 @@ export async function productInfoLink(product) {
 
   const name = String(product.name).slice(0, 80);
   const price = Number(product.price_per_kg).toLocaleString('en-NG');
+  const per = product.sold_by === 'unit' ? ' each' : '/kg';
   const text =
     `Hello Kabby's Food Mart, I'd like more information about ` +
-    `${name} (₦${price}/kg). Is it available?`;
+    `${name} (₦${price}${per}). Is it available?`;
 
   return `https://wa.me/${s.whatsapp_number}?text=${encodeURIComponent(text)}`;
 }
-
-/* ---- Usage in shop.js / product.js (DOM-safe card buttons) ----
-
-import { productInfoLink } from './waLink.js';
-import { addToCart } from './cart.js';
-
-function actionButtons(p) {
-  const wrap = document.createElement('div');
-  wrap.className = 'product-actions';
-
-  const order = document.createElement('button');
-  order.type = 'button';
-  order.className = 'btn btn-primary';
-  order.textContent = 'Order now';
-  order.disabled = p.stock_kg < p.min_order_kg;
-  order.addEventListener('click', () => {
-    addToCart(p.id, p.min_order_kg);
-    location.href = 'checkout.html';
-  });
-  wrap.appendChild(order);
-
-  const info = document.createElement('a');
-  info.className = 'btn btn-outline';
-  info.textContent = 'Ask for more information';
-  info.target = '_blank';
-  info.rel = 'noopener noreferrer';
-  info.hidden = true;                       // shown only when a valid link exists
-  productInfoLink(p).then((url) => { if (url) { info.href = url; info.hidden = false; } });
-  wrap.appendChild(info);
-
-  return wrap;
-}
-*/

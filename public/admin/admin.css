@@ -42,3 +42,7 @@ a.kpi:hover{outline:2px solid var(--color-gold)}
 .two-col{display:grid;gap:1.2rem}@media(min-width:860px){.two-col{grid-template-columns:1fr 1fr}}
 .meter{margin:.6rem 0}.meter-h{display:flex;justify-content:space-between;gap:1rem;font-size:.9rem}
 .meter-t{height:10px;background:rgba(3,48,27,.12);border-radius:999px;overflow:hidden;margin-top:.2rem}.meter-f{height:100%;background:var(--color-green)}
+fieldset.radios{display:flex;flex-direction:column;gap:.4rem;margin:.8rem 0}
+fieldset.radios legend{font-weight:700;padding:0 .4rem}
+details.more{margin:1rem 0}details.more summary{cursor:pointer;font-weight:700;margin-bottom:.6rem}
+.hint{opacity:.75;font-size:.85rem}.hint a{color:var(--color-green);font-weight:700}

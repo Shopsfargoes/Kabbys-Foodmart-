@@ -58,7 +58,7 @@ function link(href, text) { const a = el('a', null, text); a.href = href; return
 
 async function openDetail(id) {
   const o = orders.find((x) => x.id === id);
-  const { data: items } = await supabase.from('order_items').select('product_name,qty_kg,price_per_kg,line_total').eq('order_id', id);
+  const { data: items } = await supabase.from('order_items').select('product_name,qty_kg,price_per_kg,line_total,sold_by').eq('order_id', id);
   const box = $('#detail'); box.replaceChildren(); box.hidden = false;
 
   const head = el('h2', null, `Order ${o.reference.slice(-8)}`);
@@ -72,9 +72,9 @@ async function openDetail(id) {
   field(where, 'Placed', fmt(o.created_at)); field(where, 'Paid', o.paid_at ? fmt(o.paid_at) : 'Not paid');
 
   const tbl = el('table'); const th = el('thead'); const hr = el('tr');
-  ['Item', 'Kg', 'Price/kg', 'Total'].forEach((h) => hr.append(el('th', null, h))); th.append(hr); tbl.append(th);
+  ['Item', 'Qty', 'Price', 'Total'].forEach((h) => hr.append(el('th', null, h))); th.append(hr); tbl.append(th);
   const tb = el('tbody');
-  (items || []).forEach((i) => { const r = el('tr'); [i.product_name, i.qty_kg, naira(i.price_per_kg), naira(i.line_total)].forEach((v) => r.append(el('td', null, v))); tb.append(r); });
+  (items || []).forEach((i) => { const r = el('tr'); [i.product_name, i.qty_kg + (i.sold_by === 'unit' ? '' : ' kg'), naira(i.price_per_kg), naira(i.line_total)].forEach((v) => r.append(el('td', null, v))); tb.append(r); });
   tbl.append(tb);
   const wrap = el('div', 'wrap'); wrap.append(tbl);
 
@@ -106,7 +106,7 @@ async function openDetail(id) {
     const r = riders.find((x) => x.id === riderSel.value);
     if (!r || !/^234\d{10}$/.test(r.phone)) { riderLink.hidden = true; return; }
     const text = [`New delivery - Order ${o.reference.slice(-8)}`, `Customer: ${o.name}`, `Phone: +${o.phone}`,
-      `Address: ${o.address || ''}${o.city ? ', ' + o.city : ''}`, 'Items:', ...(items || []).map((i) => `- ${i.product_name} ${i.qty_kg}kg`),
+      `Address: ${o.address || ''}${o.city ? ', ' + o.city : ''}`, 'Items:', ...(items || []).map((i) => `- ${i.product_name} ${i.qty_kg}${i.sold_by === 'unit' ? '' : 'kg'}`),
       o.note ? `Note: ${o.note}` : '', 'Already paid online. Please do not collect any money.'].filter(Boolean).join('\n');
     riderLink.href = `https://wa.me/${r.phone}?text=${encodeURIComponent(text)}`; riderLink.hidden = false;
   };

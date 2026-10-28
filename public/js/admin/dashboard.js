@@ -7,7 +7,6 @@ mountNav('dashboard');
 const $ = (s) => document.querySelector(s);
 const el = (t, c, x) => { const e = document.createElement(t); if (c) e.className = c; if (x != null) e.textContent = x; return e; };
 const naira = (n) => '₦' + Math.round(Number(n)).toLocaleString('en-NG');
-const kg = (n) => Number(n).toLocaleString('en-NG', { maximumFractionDigits: 1 }) + ' kg';
 let data = null;
 
 function kpi(label, value, sub, href) {
@@ -77,7 +76,7 @@ function render() {
     const max = Math.max(...data.top_products.map((p) => Number(p.revenue)));
     data.top_products.forEach((p) => {
       const row = el('div', 'meter'), head = el('div', 'meter-h');
-      head.append(el('span', null, p.name), el('span', null, `${naira(p.revenue)} · ${kg(p.kg)}`));
+      head.append(el('span', null, p.name), el('span', null, `${naira(p.revenue)} · ${Number(p.kg).toLocaleString('en-NG', { maximumFractionDigits: 1 })} sold`));
       const track = el('div', 'meter-t'), fill = el('div', 'meter-f'); fill.style.width = (Number(p.revenue) / max) * 100 + '%';
       track.append(fill); row.append(head, track); top.append(row);
     });

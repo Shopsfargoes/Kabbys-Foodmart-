@@ -52,7 +52,7 @@ async function load() {
     const [c, p] = await Promise.all([
       supabase.from('categories').select('id,name,slug').eq('is_active', true).order('sort_order'),
       supabase.from('products')
-        .select('id,name,slug,price_per_kg,stock_kg,min_order_kg,image_url,category_id,discount_type,discount_value,discount_starts_at,discount_ends_at')
+        .select('id,name,slug,price_per_kg,stock_kg,min_order_kg,image_url,category_id,discount_type,discount_value,discount_starts_at,discount_ends_at,sold_by')
         .eq('is_active', true).order('created_at', { ascending: false }).limit(500),
     ]);
     if (c.error || p.error) throw (c.error || p.error);

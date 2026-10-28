@@ -17,7 +17,7 @@ else {
   const { data: o } = await supabase.from('orders').select('*').eq('id', id).maybeSingle();
   if (!o) note('Order not found.');
   else {
-    const { data: items } = await supabase.from('order_items').select('product_id,product_name,qty_kg,price_per_kg,line_total').eq('order_id', id);
+    const { data: items } = await supabase.from('order_items').select('product_id,product_name,qty_kg,price_per_kg,line_total,sold_by').eq('order_id', id);
     view.replaceChildren();
     const card = el('div', 'card'); card.style.padding = '1.2rem';
     card.append(el('h1', null, 'Order ' + o.reference.slice(-8)), el('p', 'hint', 'Placed ' + fmt(o.created_at)));
@@ -36,7 +36,7 @@ else {
 
     const tbl = el('table', 'plain');
     (items || []).forEach((i) => {
-      const r = el('tr'); r.append(el('td', null, `${i.product_name} × ${i.qty_kg}kg`), el('td', 'r', naira(i.line_total))); tbl.append(r);
+      const r = el('tr'); r.append(el('td', null, `${i.product_name} × ${i.qty_kg}${i.sold_by === 'unit' ? '' : 'kg'}`), el('td', 'r', naira(i.line_total))); tbl.append(r);
     });
     const row = (l, v, cls) => { const r = el('tr', cls); r.append(el('td', null, l), el('td', 'r', v)); tbl.append(r); };
     row('Subtotal', naira(o.subtotal));

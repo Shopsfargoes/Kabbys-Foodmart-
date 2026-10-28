@@ -9,6 +9,7 @@ const el = (t, c, x) => { const e = document.createElement(t); if (c) e.classNam
 const r3 = (n) => Math.round(n * 1000) / 1000;
 const fmt = (d) => new Date(d).toLocaleString('en-NG', { dateStyle: 'medium', timeStyle: 'short' });
 
+const U = (p) => (p.sold_by === 'unit' ? ' units' : ' kg');
 const state = (p) => Number(p.stock_kg) < Number(p.min_order_kg) ? ['Out of stock', 'bad', 'out']
   : Number(p.stock_kg) <= Number(p.low_stock_kg) ? ['Low', 'warn', 'low'] : ['OK', 'ok', 'ok'];
 const TABS = [['all', 'All', () => true], ['low', 'Low stock', (p) => state(p)[2] === 'low'], ['out', 'Out of stock', (p) => state(p)[2] === 'out']];
@@ -30,7 +31,7 @@ function render() {
     const tr = el('tr', p.is_active ? '' : 'off');
     const st = el('td'); st.append(el('span', 'badge ' + cls, label));
     const act = el('td'); const b = el('button', 'btn sm', 'Update stock'); b.type = 'button'; b.addEventListener('click', () => openPanel(p)); act.append(b);
-    tr.append(el('td', null, p.name + (p.is_active ? '' : ' (hidden)')), el('td', null, p.stock_kg + ' kg'), el('td', null, p.low_stock_kg + ' kg'), st, act);
+    tr.append(el('td', null, p.name + (p.is_active ? '' : ' (hidden)')), el('td', null, p.stock_kg + U(p)), el('td', null, p.low_stock_kg + U(p)), st, act);
     tb.append(tr);
   });
   $('#empty').textContent = list.length ? '' : 'Nothing here.';
@@ -42,7 +43,7 @@ async function history(p, into) {
   into.replaceChildren();
   (data || []).forEach((m) => {
     const r = el('tr'); const ch = Number(m.change_kg);
-    r.append(el('td', null, fmt(m.created_at)), el('td', null, (ch > 0 ? '+' : '') + ch + ' kg'), el('td', null, REASON[m.reason] || m.reason), el('td', null, m.note || ''));
+    r.append(el('td', null, fmt(m.created_at)), el('td', null, (ch > 0 ? '+' : '') + ch + U(p)), el('td', null, REASON[m.reason] || m.reason), el('td', null, m.note || ''));
     into.append(r);
   });
 }
@@ -51,8 +52,8 @@ function openPanel(p) {
   const box = $('#panel'); box.replaceChildren(); box.hidden = false;
   const msg = el('p', 'msg'); msg.setAttribute('role', 'status');
   const mode = el('select'); mode.setAttribute('aria-label', 'Action');
-  [['restock', 'Restock (add kg)'], ['spoilage', 'Spoilage / waste (remove kg)'], ['set', 'Correction (set exact kg)']].forEach(([v, t]) => { const o = el('option', null, t); o.value = v; mode.append(o); });
-  const amt = el('input'); amt.type = 'number'; amt.min = 0; amt.step = 0.001; amt.placeholder = 'kg'; amt.setAttribute('aria-label', 'Amount in kg');
+  [['restock', 'Restock (add)'], ['spoilage', 'Spoilage / waste (remove)'], ['set', 'Correction (set exact amount)']].forEach(([v, t]) => { const o = el('option', null, t); o.value = v; mode.append(o); });
+  const amt = el('input'); amt.type = 'number'; amt.min = 0; amt.step = 0.001; amt.placeholder = U(p).trim(); amt.setAttribute('aria-label', 'Amount');
   const note = el('input'); note.placeholder = 'Note (optional)'; note.maxLength = 200;
   const hist = el('tbody');
 
@@ -71,11 +72,11 @@ function openPanel(p) {
     });
     if (error) { msg.textContent = error.code === '23514' ? 'Not enough stock to remove that amount.' : 'Could not update stock.'; msg.style.color = 'crimson'; return; }
     p.stock_kg = data; amt.value = ''; note.value = '';
-    msg.textContent = `Saved. New stock: ${data} kg.`; msg.style.color = 'green';
-    cur_.textContent = data + ' kg'; render(); history(p, hist);
+    msg.textContent = `Saved. New stock: ${data}${U(p)}.`; msg.style.color = 'green';
+    cur_.textContent = data + U(p); render(); history(p, hist);
   };
 
-  const cur_ = el('strong', null, p.stock_kg + ' kg');
+  const cur_ = el('strong', null, p.stock_kg + U(p));
   const head = el('h2', null, p.name); const line = el('p'); line.append('Current stock: ', cur_);
   const go = el('button', 'btn', 'Save'); go.type = 'button'; go.addEventListener('click', save);
   const close = el('button', 'btn sm', 'Close'); close.type = 'button'; close.addEventListener('click', () => { box.hidden = true; });
@@ -89,7 +90,7 @@ function openPanel(p) {
 }
 
 async function load() {
-  const { data, error } = await supabase.from('products').select('id,name,stock_kg,low_stock_kg,min_order_kg,is_active').order('name');
+  const { data, error } = await supabase.from('products').select('id,name,stock_kg,low_stock_kg,min_order_kg,sold_by,is_active').order('name');
   if (error) { $('#empty').textContent = 'Could not load products.'; return; }
   products = data || []; render();
 }

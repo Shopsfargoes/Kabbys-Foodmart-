@@ -22,7 +22,7 @@ export const el = (tag, cls, text) => {
 
 export function priceEl(p) {
   const eff = effectivePrice(p);
-  const s = el('span', 'price', naira(eff) + '/kg');
+  const s = el('span', 'price', naira(eff) + (p.sold_by === 'unit' ? ' each' : '/kg'));
   if (eff < Number(p.price_per_kg)) s.append(' ', el('del', 'was', naira(p.price_per_kg)));
   return s;
 }

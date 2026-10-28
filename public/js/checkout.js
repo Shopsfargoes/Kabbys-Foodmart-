@@ -1,8 +1,8 @@
 import { supabase } from './supabaseClient.js';
 import { getCart, clearCart } from './cart.js';
 import { $, el, naira, effectivePrice } from './ui.js';
+import { PAYSTACK_PUBLIC_KEY } from './config.js';
 
-const PAYSTACK_PUBLIC_KEY = 'pk_test_10d6da44fc0a9bcfb7eeaf110238aec4bf329b43'; // TODO: your Paystack PUBLIC key (never the secret key)
 const NG_PHONE = /^(?:\+?234|0)[789][01]\d{8}$/;
 const r2 = (n) => Math.round(n * 100) / 100;
 const r3 = (n) => Math.round(n * 1000) / 1000;
@@ -13,7 +13,7 @@ const setErr = (t) => { $('#err').textContent = t || ''; };
 
 function estimate() {
   const subtotal = r2(items.reduce((s, i) => s + i.qty_kg * effectivePrice(i.p), 0));
-  const kg = r3(items.reduce((s, i) => s + i.qty_kg, 0));
+  const kg = r3(items.reduce((s, i) => s + (i.p.sold_by === 'unit' ? i.qty_kg * Number(i.p.weight_kg || 0) : i.qty_kg), 0));
   const disc = coupon ? coupon.discount : 0;
   const th = Number(settings.free_delivery_threshold || 0);
   let fee = 0, problem = '';
@@ -45,7 +45,7 @@ function paint() {
 function paintItems() {
   const box = $('#sumItems'); box.replaceChildren();
   items.forEach((i) => {
-    const p = el('p', 'sum-line'); p.append(el('span', null, `${i.p.name} × ${i.qty_kg}kg`), el('span', null, naira(r2(i.qty_kg * effectivePrice(i.p)))));
+    const p = el('p', 'sum-line'); p.append(el('span', null, `${i.p.name} × ${i.qty_kg}${i.p.sold_by === 'unit' ? '' : 'kg'}`), el('span', null, naira(r2(i.qty_kg * effectivePrice(i.p)))));
     box.append(p);
   });
 }
@@ -126,7 +126,7 @@ async function load() {
   if (!cart.length) { location.replace('cart.html'); return; }
   try {
     const [p, z, r, s] = await Promise.all([
-      supabase.from('products').select('id,name,price_per_kg,discount_type,discount_value,discount_starts_at,discount_ends_at,ships_intercity,is_active').in('id', cart.map((i) => i.id)),
+      supabase.from('products').select('id,name,price_per_kg,discount_type,discount_value,discount_starts_at,discount_ends_at,ships_intercity,sold_by,weight_kg,is_active').in('id', cart.map((i) => i.id)),
       supabase.from('delivery_zones').select('*').eq('is_active', true).order('city'),
       supabase.from('delivery_rules').select('*').eq('is_active', true).order('city'),
       supabase.from('site_settings').select('key,value').in('key', ['free_delivery_threshold', 'pickup_address', 'pickup_hours']),

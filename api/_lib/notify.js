@@ -14,7 +14,7 @@ async function send(subject, text) {
 
 export async function notifyOwner(order, items) {
   const naira = (n) => 'NGN ' + Number(n).toLocaleString('en-NG');
-  const lines = items.map((i) => `- ${i.product_name}: ${i.qty_kg}kg (${naira(i.line_total)})`);
+  const lines = items.map((i) => `- ${i.product_name}: ${i.qty_kg}${i.sold_by === 'unit' ? '' : 'kg'} (${naira(i.line_total)})`);
   const where = order.delivery_type === 'pickup' ? 'PICKUP' : `DELIVERY to ${order.city || ''}\n${order.address || ''}`;
   await send(`New paid order ${order.reference}`, [
     `Customer: ${order.name}`, `Phone: ${order.phone}`, `Email: ${order.email}`, where, '', ...lines, '',

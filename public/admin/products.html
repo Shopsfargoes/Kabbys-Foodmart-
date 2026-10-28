@@ -2,47 +2,56 @@
 <html lang="en"><head><meta charset="UTF-8">
 <meta name="robots" content="noindex, nofollow"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Products | Admin</title>
-<link rel="stylesheet" href="../css/variables.css"><link rel="stylesheet" href="admin.css"><link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../css/variables.css"><link rel="stylesheet" href="admin.css">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 </head>
 <body><main>
 <section class="card">
   <h2 id="formTitle">Add product</h2>
   <form id="pf" novalidate>
     <div class="grid2">
-      <label>Name<input id="name" maxlength="100" required></label>
-      <label>URL slug (auto)<input id="slug" maxlength="80" placeholder="auto-from-name"></label>
-      <label>Category<select id="cat"><option value="">No category</option></select></label>
-      <label>Image (jpg, png, webp, max 2MB)<input id="image" type="file" accept="image/jpeg,image/png,image/webp"></label>
+      <label>Product name<input id="name" maxlength="100" placeholder="e.g. Rice 3kg" required></label>
+      <label>URL slug (fills itself)<input id="slug" maxlength="80" placeholder="rice-3kg"></label>
     </div>
-    <label>Description<textarea id="desc" rows="2" maxlength="1000"></textarea></label>
-    <fieldset><legend>Price &amp; discount</legend>
-      <div class="grid2">
-        <label>Price per kg (₦)<input id="price" type="number" min="0" step="0.01" required></label>
-        <label>Discount type<select id="dtype">
-          <option value="none">No discount</option>
-          <option value="percent">Percentage (%) off</option>
-          <option value="flat">Flat (₦ off per kg)</option></select></label>
-        <label>Discount value<input id="dval" type="number" min="0" step="0.01" value="0"></label>
-        <label>Starts (optional)<input id="dstart" type="datetime-local"></label>
-        <label>Ends (optional)<input id="dend" type="datetime-local"></label>
-      </div>
-      <p class="preview" id="preview"></p>
+    <fieldset class="radios"><legend>How do you sell it?</legend>
+      <label class="row"><input type="radio" name="sold" value="unit" checked> By the pack (example: Rice 3kg)</label>
+      <label class="row"><input type="radio" name="sold" value="kg"> By the kilo (example: Turkey)</label>
     </fieldset>
     <div class="grid2">
-      <label>Stock (kg)<input id="stock" type="number" min="0" step="0.001" value="0"></label>
-      <label>Minimum order (kg)<input id="min" type="number" min="0.001" step="0.001" value="0.5"></label>
-      <label>Step (kg)<input id="step" type="number" min="0.001" step="0.001" value="0.5"></label>
-      <label>Low-stock alert (kg)<input id="low" type="number" min="0" step="0.001" value="5"></label>
+      <label>Category<select id="cat"><option value="">No category</option></select></label>
+      <label><span id="priceLbl">Price per pack (₦)</span><input id="price" type="number" min="0" step="0.01" required></label>
+      <label>Discount<select id="dtype"><option value="none">No discount</option>
+        <option value="percent">Percentage (%) off</option><option value="flat">Flat amount (₦) off</option></select></label>
+      <label>Discount value<input id="dval" type="number" min="0" step="0.01" value="0"></label>
     </div>
-    <label class="row"><input id="inter" type="checkbox"> Can ship to other cities</label>
-    <label class="row"><input id="active" type="checkbox" checked> Visible in shop</label>
+    <p class="preview" id="preview"></p>
+    <p class="hint">Coupon codes are made on the <a href="coupons.html">Coupons</a> page.</p>
+    <label>Description<textarea id="desc" rows="2" maxlength="1000"></textarea></label>
+    <div class="grid2">
+      <label><span id="stockLbl">Total in stock (units)</span><input id="stock" type="number" min="0" step="1" value="0"></label>
+      <label><span id="lowLbl">Stock alert at (units)</span><input id="low" type="number" min="0" step="1" value="3"></label>
+    </div>
+    <label>Image (jpg, png or webp, max 2MB)<input id="image" type="file" accept="image/jpeg,image/png,image/webp"></label>
+
+    <details class="more"><summary>More options</summary>
+      <div class="grid2">
+        <label><span id="minLbl">Smallest order</span><input id="min" type="number" min="0.001" step="0.001" value="1"></label>
+        <label><span id="stepLbl">Order goes up by</span><input id="step" type="number" min="0.001" step="0.001" value="1"></label>
+        <label id="weightRow">Weight of one pack (kg), for other-city delivery<input id="weight" type="number" min="0" step="0.001" value="0"></label>
+        <label>Discount starts (optional)<input id="dstart" type="datetime-local"></label>
+        <label>Discount ends (optional)<input id="dend" type="datetime-local"></label>
+      </div>
+      <label class="row"><input id="inter" type="checkbox"> Can ship to other cities</label>
+      <label class="row"><input id="active" type="checkbox" checked> Show in shop</label>
+    </details>
+
     <p><button class="btn" type="submit">Save product</button>
        <button class="btn alt" type="button" id="reset">Clear</button></p>
     <p class="msg" id="msg" role="status"></p>
   </form>
 </section>
 <section class="card"><h2>All products</h2><div class="wrap"><table>
-  <thead><tr><th>Name</th><th>Category</th><th>Price/kg</th><th>Discount</th><th>Stock</th><th></th></tr></thead>
+  <thead><tr><th>Name</th><th>Category</th><th>Price</th><th>Discount</th><th>In stock</th><th></th></tr></thead>
   <tbody id="rows"></tbody></table></div></section>
 </main>
 <script type="module" src="../js/admin/products.js"></script></body></html>

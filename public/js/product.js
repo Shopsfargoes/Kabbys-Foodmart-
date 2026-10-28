@@ -21,6 +21,7 @@ function crumbs(p) {
 
 function view(p) {
   const min = Number(p.min_order_kg), step = Number(p.step_kg), stock = Number(p.stock_kg);
+  const KG = p.sold_by === 'unit' ? '' : 'kg';
   const max = r3(Math.floor(stock / step + 1e-9) * step);
   const out = max < min;
   let qty = min;
@@ -36,18 +37,18 @@ function view(p) {
   const meta = el('div', 'meta');
   meta.append(priceEl(p));
   if (p.categories) meta.append(el('span', 'tag', p.categories.name));
-  const status = out ? 'Out of stock' : stock <= Number(p.low_stock_kg) ? `Only ${stock}kg left` : 'In stock';
+  const status = out ? 'Out of stock' : stock <= Number(p.low_stock_kg) ? `Only ${stock}${KG} left` : 'In stock';
   info.append(el('h1', null, p.name), meta, el('p', 'stock ' + (out ? 'out' : 'ok'), status));
   if (p.description) info.append(el('p', 'desc', p.description));
 
-  const label = el('label', 'qty-label', 'Quantity (kg)'); label.htmlFor = 'qty';
+  const label = el('label', 'qty-label', p.sold_by === 'unit' ? 'Quantity' : 'Quantity (kg)'); label.htmlFor = 'qty';
   const row = el('div', 'qty');
   const minus = el('button', 'btn btn-outline btn-sm', '−'); minus.type = 'button'; minus.setAttribute('aria-label', 'Decrease');
   const plus = el('button', 'btn btn-outline btn-sm', '+'); plus.type = 'button'; plus.setAttribute('aria-label', 'Increase');
   const input = el('input'); input.id = 'qty'; input.type = 'number'; input.inputMode = 'decimal';
   input.min = min; input.step = step; if (!out) input.max = max;
   row.append(minus, input, plus);
-  const hint = el('small', 'hint', `Minimum ${min}kg, in steps of ${step}kg`);
+  const hint = el('small', 'hint', p.sold_by === 'unit' ? (min > 1 ? `Minimum ${min}` : '') : `Minimum ${min}kg, in steps of ${step}kg`);
   const total = el('p', 'total'); const totalVal = el('strong');
   total.append('Total: ', totalVal);
 
@@ -63,7 +64,7 @@ function view(p) {
   add.addEventListener('click', () => {
     addToCart(p.id, qty);
     const n = $('.cart-count'); if (n) n.textContent = cartCount();
-    msg.replaceChildren(`Added ${qty}kg to your cart. `, link('cart.html', 'View cart'));
+    msg.replaceChildren(`Added ${qty}${KG} to your cart. `, link('cart.html', 'View cart'));
   });
   now.addEventListener('click', () => { addToCart(p.id, qty); location.href = 'checkout.html'; });
   if (out) { [minus, plus, input, add, now].forEach((x) => { x.disabled = true; }); }
@@ -84,7 +85,7 @@ function view(p) {
 async function related(p) {
   if (!p.category_id) return;
   const { data } = await supabase.from('products')
-    .select('id,name,slug,price_per_kg,stock_kg,min_order_kg,image_url,category_id,discount_type,discount_value,discount_starts_at,discount_ends_at')
+    .select('id,name,slug,price_per_kg,stock_kg,min_order_kg,image_url,category_id,discount_type,discount_value,discount_starts_at,discount_ends_at,sold_by')
     .eq('is_active', true).eq('category_id', p.category_id).neq('id', p.id).limit(4);
   if (!data || !data.length) return;
   $('#relTitle').hidden = false;

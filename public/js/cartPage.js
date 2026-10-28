@@ -31,12 +31,12 @@ function row(item, p) {
   const minus = el('button', 'btn btn-outline btn-sm', '−'); minus.type = 'button'; minus.setAttribute('aria-label', 'Decrease');
   const plus = el('button', 'btn btn-outline btn-sm', '+'); plus.type = 'button'; plus.setAttribute('aria-label', 'Increase');
   const input = el('input'); input.type = 'number'; input.inputMode = 'decimal'; input.min = min; input.step = step; input.max = max; input.value = item.qty_kg;
-  input.setAttribute('aria-label', `Quantity in kg for ${p.name}`);
+  input.setAttribute('aria-label', `Quantity for ${p.name}`);
   const set = (v) => { setQty(item.id, clamp(v)); render(); };
   minus.addEventListener('click', () => set(item.qty_kg - step));
   plus.addEventListener('click', () => set(item.qty_kg + step));
   input.addEventListener('change', () => set(input.value));
-  q.append(minus, input, plus, el('span', 'unit', 'kg'));
+  q.append(minus, input, plus, el('span', 'unit', p.sold_by === 'unit' ? '' : 'kg'));
 
   const rm = el('button', 'link-btn', 'Remove'); rm.type = 'button';
   rm.addEventListener('click', () => { removeFromCart(item.id); render(); });
@@ -73,7 +73,7 @@ async function load() {
   if (!cart.length) return emptyState();
   try {
     const { data, error } = await supabase.from('products')
-      .select('id,name,slug,price_per_kg,discount_type,discount_value,discount_starts_at,discount_ends_at,stock_kg,min_order_kg,step_kg,image_url,is_active')
+      .select('id,name,slug,price_per_kg,discount_type,discount_value,discount_starts_at,discount_ends_at,stock_kg,min_order_kg,step_kg,sold_by,image_url,is_active')
       .in('id', cart.map((i) => i.id));
     if (error) throw error;
     products = new Map((data || []).map((p) => [p.id, p]));
