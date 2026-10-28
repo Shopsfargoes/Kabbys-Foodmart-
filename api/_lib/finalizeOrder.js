@@ -2,7 +2,7 @@
 // webhook, the success page and Paystack retries can all call this safely.
 import { supabaseAdmin as db } from './supabaseAdmin.js';
 import { ensureCustomer, sendAccessLink } from './ensureCustomer.js';
-import { notifyOwner, notifyIssue } from './notify.js';
+import { notifyOwner, notifyIssue, sendCustomerReceipt } from './notify.js';
 
 export async function finalizeOrder({ reference, tx }) {
   const { data: order } = await db.from('orders').select('*').eq('reference', reference).maybeSingle();
@@ -47,7 +47,7 @@ export async function finalizeOrder({ reference, tx }) {
 
   if (first) {
     const { data: items } = await db.from('order_items').select('product_name, qty_kg, line_total, sold_by').eq('order_id', order.id);
-    await notifyOwner(order, items || []);
+    await sendCustomerReceipt(order, items || []);
   }
   return { status: 'paid' };
 }
